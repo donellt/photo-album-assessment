@@ -47,35 +47,51 @@ utils.getJSON = async function (url) {
     return data;
 }
 
-var html = ''
 
-for (let i = 1; i < 100; i++) {
+async function init() {
+    let root = document.querySelector('#root');
+    let url = 'https://jsonplaceholder.typicode.com/photos';
+    let photos = null;
+    
+    try {
+        photos = await utils.getJSON(url);
+    }
+    catch (e) {
+        root.textContent = 'error: ' + e;
+    }
 
-    async function init() {
-        let root = document.querySelector('#root');
-        let url = 'https://jsonplaceholder.typicode.com/photos?albumId=' + i;
-        let photos = null;
+    let photoDict = {};
+    let html = '';
 
-        try {
-            photos = await utils.getJSON(url);
+    for (photo of photos) {
+        let aId = photo.albumId;
+        
+        if (photoDict[aId]) {
+            continue
+        } else {
+            filteredArray = photos.filter(photo => photo.albumId == aId);
+            html += loadAlbum(aId, filteredArray);
+            photoDict[aId] = true;
         }
-        catch (e) {
-            root.textContent = 'error: ' + e;
+    }
+
+    root.innerHTML = html;
+}
+
+function loadAlbum(albumId, photos) {
+        html = '';
+        // order trade-off for time 
+        // start a section element for each album
+        html += '<section style="order:' + albumId + ';">photo-album ' + albumId + ' ';
+
+        for (photo of photos) {
+            html += `[${photo.id}] ${photo.title} `
         }
 
-        root.innerHTML = 
-            html += '<section style="order:' + i + ';">photo-album ' + i + ' ';
-
-            for (photo of photos) {
-                // start a section element for each album
-                html += `[${photo.id}] ${photo.title} `
-            }
         // close off the section
         html += '</section>';
 
-        // return the html
-        return html;
-    }
-
-    init();
+    return html;
 }
+
+init();
