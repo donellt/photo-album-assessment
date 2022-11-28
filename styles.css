@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    font-family: Verdana;
+    margin-bottom: 20px;
+  }
