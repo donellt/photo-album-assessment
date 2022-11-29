@@ -81,7 +81,7 @@ async function init() {
     root.innerHTML = html;
 }
 
-module.exports = function loadAlbum(albumId, photos) {
+function loadAlbum(albumId, photos) {
     html = '';
     // order trade-off for time 
     // start a section element for each album
