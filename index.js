@@ -1,3 +1,5 @@
+// import loadAlbum from './lib/loadAlbum.js';
+
 let utils = {};
 
 // returns a JSON String
@@ -41,11 +43,12 @@ utils.getJSON = async function (url) {
         success = true;
     }
     catch (e) {
-        alert('parse error');
+        alert('parse error' + string);
     }
 
     return data;
 }
+
 
 
 async function init() {
@@ -78,20 +81,20 @@ async function init() {
     root.innerHTML = html;
 }
 
-function loadAlbum(albumId, photos) {
-        html = '';
-        // order trade-off for time 
-        // start a section element for each album
-        html += '<section style="order:' + albumId + ';">photo-album ' + albumId + ' ';
+module.exports = function loadAlbum(albumId, photos) {
+    html = '';
+    // order trade-off for time 
+    // start a section element for each album
+    html += '<section style="order:' + albumId + ';">photo-album ' + albumId + ' ';
 
-        for (photo of photos) {
-            html += `[${photo.id}] ${photo.title} `
-        }
+    for (photo of photos) {
+        html += `[${photo.id}] ${photo.title} `
+    }
 
-        // close off the section
-        html += '</section>';
+    // close off the section
+    html += '</section>';
 
-    return html;
+return html;
 }
 
 init();
